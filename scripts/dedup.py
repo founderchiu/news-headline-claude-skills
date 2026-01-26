@@ -317,6 +317,9 @@ def merge_items(items: List[Dict]) -> Dict:
     for item in items:
         parsed = parse_time(item.get('time', ''))
         if parsed:
+            # Ensure all datetimes are timezone-aware for comparison
+            if parsed.tzinfo is None:
+                parsed = parsed.replace(tzinfo=timezone.utc)
             times_parsed.append((item.get('time', ''), parsed))
 
     earliest_time = min(times_parsed, key=lambda x: x[1])[0] if times_parsed else items[0].get('time', '')
