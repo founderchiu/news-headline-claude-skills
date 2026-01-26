@@ -452,6 +452,91 @@ def fetch_cnbc(limit=10, keyword=None):
     except:
         return []
 
+def fetch_reddit_stocks(limit=10, keyword=None):
+    """
+    Fetch top discussed stocks from Reddit finance subreddits.
+    Scans r/wallstreetbets, r/stocks, r/investing for stock ticker mentions.
+    """
+    import collections
+
+    # Common stock ticker pattern (1-5 uppercase letters, often prefixed with $)
+    ticker_pattern = re.compile(r'\$?([A-Z]{1,5})\b')
+
+    # Common words to exclude (not stock tickers)
+    exclude_words = {
+        'I', 'A', 'AN', 'THE', 'TO', 'IS', 'IT', 'IN', 'ON', 'AT', 'BY', 'OR',
+        'AND', 'FOR', 'OF', 'BE', 'AS', 'SO', 'IF', 'AM', 'PM', 'US', 'UK',
+        'CEO', 'CFO', 'IPO', 'ETF', 'SEC', 'FDA', 'IMO', 'IMHO', 'TIL', 'PSA',
+        'DD', 'TA', 'EPS', 'PE', 'GDP', 'CPI', 'FED', 'USD', 'EUR', 'GBP',
+        'NYSE', 'NASDAQ', 'SP', 'DOW', 'ATH', 'ATL', 'EOD', 'AH', 'PM',
+        'YOLO', 'FOMO', 'FUD', 'HODL', 'WSB', 'OP', 'OC', 'TL', 'DR', 'TLDR',
+        'AI', 'ML', 'API', 'IT', 'IV', 'DTE', 'OTM', 'ITM', 'ATM', 'PT',
+        'EDIT', 'UPDATE', 'NEW', 'OLD', 'BIG', 'TOP', 'ALL', 'ANY', 'NOW',
+        'NOT', 'BUT', 'CAN', 'HAS', 'WAS', 'ARE', 'YOU', 'YOUR', 'MY', 'WE',
+        'RED', 'GREEN', 'UP', 'DOWN', 'BUY', 'SELL', 'HOLD', 'LONG', 'SHORT'
+    }
+
+    # Subreddits to scan
+    subreddits = ['wallstreetbets', 'stocks', 'investing']
+    ticker_counts = collections.Counter()
+    ticker_posts = collections.defaultdict(list)  # ticker -> list of post info
+
+    for subreddit in subreddits:
+        try:
+            url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=50"
+            headers = {**HEADERS, "Accept": "application/json"}
+            response = requests.get(url, headers=headers, timeout=10)
+            data = response.json()
+
+            for post in data['data']['children']:
+                p = post['data']
+                if p.get('stickied'):
+                    continue
+
+                # Extract tickers from title and selftext
+                text = p['title'] + ' ' + (p.get('selftext', '') or '')
+                matches = ticker_pattern.findall(text)
+
+                for ticker in matches:
+                    if ticker not in exclude_words and len(ticker) >= 2:
+                        ticker_counts[ticker] += 1
+                        # Store post info for this ticker
+                        if len(ticker_posts[ticker]) < 3:  # Keep top 3 posts per ticker
+                            ticker_posts[ticker].append({
+                                'title': p['title'],
+                                'url': f"https://reddit.com{p['permalink']}",
+                                'score': p['score'],
+                                'subreddit': subreddit
+                            })
+        except:
+            continue
+
+        time.sleep(0.3)
+
+    # Build items for top discussed tickers
+    items = []
+    for ticker, count in ticker_counts.most_common(limit):
+        posts = ticker_posts[ticker]
+        top_post = posts[0] if posts else None
+
+        # Get stock info URL
+        stock_url = f"https://finance.yahoo.com/quote/{ticker}"
+
+        # Build description from top posts
+        subreddits_mentioned = list(set(p['subreddit'] for p in posts))
+
+        items.append({
+            "source": "Reddit Stocks",
+            "title": f"${ticker} - Mentioned {count}x across {', '.join(f'r/{s}' for s in subreddits_mentioned)}",
+            "url": stock_url,
+            "heat": f"{count} mentions",
+            "time": "Today",
+            "description": top_post['title'] if top_post else "",
+            "top_post_url": top_post['url'] if top_post else ""
+        })
+
+    return filter_items(items, keyword)[:limit]
+
 # =============================================================================
 # MAIN
 # =============================================================================
@@ -474,12 +559,13 @@ SOURCES_MAP = {
     'bloomberg': fetch_bloomberg,
     'yahoo_finance': fetch_yahoo_finance,
     'cnbc': fetch_cnbc,
+    'reddit_stocks': fetch_reddit_stocks,
 }
 
 SOURCE_GROUPS = {
     'tech': ['hackernews', 'github', 'producthunt', 'reddit_tech', 'reddit_programming', 'techcrunch', 'arstechnica', 'theverge'],
     'global': ['bbc', 'reuters', 'apnews'],
-    'finance': ['bloomberg', 'yahoo_finance', 'cnbc'],
+    'finance': ['bloomberg', 'yahoo_finance', 'cnbc', 'reddit_stocks'],
     'all': list(SOURCES_MAP.keys()),
 }
 

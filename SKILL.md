@@ -13,7 +13,7 @@ Fetch real-time news from major English-language sources worldwide.
 |----------|---------|
 | **Tech** | Hacker News, GitHub Trending, Product Hunt, Reddit (r/technology, r/programming), TechCrunch, Ars Technica, The Verge |
 | **Global** | BBC News, Reuters, AP News |
-| **Finance** | Bloomberg, Yahoo Finance, CNBC |
+| **Finance** | Bloomberg, Yahoo Finance, CNBC, **Reddit Stocks** (NEW) |
 
 ## Tools
 
@@ -50,7 +50,30 @@ python3 scripts/fetch_news.py --source tech --keyword "AI,LLM,GPT,Claude,Agent" 
 | `--no-dedup` | Disable deduplication (raw output, backward compatible) |
 
 **Individual Sources:**
-`hackernews`, `github`, `producthunt`, `reddit_tech`, `reddit_programming`, `techcrunch`, `arstechnica`, `theverge`, `bbc`, `reuters`, `apnews`, `bloomberg`, `yahoo_finance`, `cnbc`
+`hackernews`, `github`, `producthunt`, `reddit_tech`, `reddit_programming`, `techcrunch`, `arstechnica`, `theverge`, `bbc`, `reuters`, `apnews`, `bloomberg`, `yahoo_finance`, `cnbc`, `reddit_stocks`
+
+### Reddit Stocks Tracker (NEW)
+
+Scans r/wallstreetbets, r/stocks, r/investing for the **top 10 most discussed stock tickers**.
+
+```bash
+# Get top discussed stocks
+python3 scripts/fetch_news.py --source reddit_stocks --limit 10
+
+# Include in finance scan
+python3 scripts/fetch_news.py --source finance --limit 10
+```
+
+**Output example:**
+```json
+{
+  "title": "$META - Mentioned 15x across r/wallstreetbets, r/stocks",
+  "url": "https://finance.yahoo.com/quote/META",
+  "heat": "15 mentions",
+  "description": "META $90K YOLO + DD",
+  "top_post_url": "https://reddit.com/r/wallstreetbets/..."
+}
+```
 
 ## Smart Deduplication (NEW)
 
