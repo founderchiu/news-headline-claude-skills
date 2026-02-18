@@ -1,0 +1,74 @@
+{
+  "items": [
+    {
+      "source": "Hacker News",
+      "source_type": "aggregator",
+      "title": "DOOM Ported to an Earbud",
+      "url": "https://doombuds.com/article",
+      "discussion_url": "https://news.ycombinator.com/item?id=12345",
+      "heat": "529 points",
+      "time": "2 hours ago",
+      "time_iso": "2026-01-25T08:00:00+00:00"
+    },
+    {
+      "source": "Reddit r/technology",
+      "source_type": "aggregator",
+      "title": "DOOM Running on an Earbud - Full Article",
+      "url": "https://doombuds.com/article",
+      "discussion_url": "https://reddit.com/r/technology/comments/abc123",
+      "heat": "5200 upvotes",
+      "time": "2026-01-25 07:30",
+      "time_iso": "2026-01-25T07:30:00+00:00"
+    },
+    {
+      "source": "The Verge",
+      "source_type": "original_reporting",
+      "title": "Someone got DOOM running on earbuds, because of course they did",
+      "url": "https://theverge.com/doom-earbuds",
+      "heat": "",
+      "time": "2026-01-25T09:00:00Z",
+      "time_iso": "2026-01-25T09:00:00+00:00"
+    },
+    {
+      "source": "BBC News",
+      "source_type": "wire",
+      "title": "Tech Breakthrough: Gaming on Earbuds",
+      "url": "https://bbc.co.uk/news/tech-12345",
+      "heat": "",
+      "time": "Sat, 25 Jan 2026 06:00:00 GMT",
+      "time_iso": "2026-01-25T06:00:00+00:00"
+    },
+    {
+      "source": "TechCrunch",
+      "source_type": "original_reporting",
+      "title": "OpenAI Announces GPT-5 with Advanced Reasoning",
+      "url": "https://techcrunch.com/openai-gpt5",
+      "heat": "",
+      "time": "Sat, 25 Jan 2026 10:00:00 GMT",
+      "time_iso": "2026-01-25T10:00:00+00:00"
+    },
+    {
+      "source": "Hacker News",
+      "source_type": "aggregator",
+      "title": "GPT-5 Released by OpenAI",
+      "url": "https://openai.com/gpt5",
+      "discussion_url": "https://news.ycombinator.com/item?id=12346",
+      "heat": "1205 points",
+      "time": "3 hours ago",
+      "time_iso": "2026-01-25T07:00:00+00:00"
+    }
+  ],
+  "expected_dedup_count": 3,
+  "expected_groups": [
+    {
+      "title_contains": "DOOM",
+      "source_count": 4,
+      "sources": ["Hacker News", "Reddit r/technology", "The Verge", "BBC News"]
+    },
+    {
+      "title_contains": "GPT-5",
+      "source_count": 2,
+      "sources": ["TechCrunch", "Hacker News"]
+    }
+  ]
+}

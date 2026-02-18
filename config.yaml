@@ -1,0 +1,159 @@
+# English News Skill Configuration
+# =================================
+# This file configures the news aggregator behavior.
+# Edit this file to customize sources, limits, and output format.
+
+version: 1
+
+# Source Configuration
+# --------------------
+sources:
+  # List of enabled sources (comment out to disable)
+  enabled:
+    - hackernews
+    - github
+    - producthunt
+    - reddit_tech
+    - reddit_programming
+    - techcrunch
+    - arstechnica
+    - theverge
+    - bbc
+    - reuters
+    - apnews
+    - yahoo_finance
+    - cnbc
+    - reddit_stocks
+    # - bloomberg  # Often paywalled, enable if you have access
+
+  # Per-source limits (overrides default limit)
+  per_source_limits:
+    hackernews: 15
+    github: 10
+    reddit_tech: 10
+    reddit_programming: 10
+    reddit_stocks: 10
+    default: 10
+
+# Deduplication Settings
+# ----------------------
+dedup:
+  # Title similarity threshold (0.0 - 1.0)
+  # Higher = stricter matching, fewer false positives
+  title_threshold: 0.70
+
+  # Whether to resolve canonical URLs (requires HTTP requests)
+  resolve_canonical_urls: false
+
+  # Keep alternate sources in output
+  preserve_alternates: true
+
+# Deep Mode Settings
+# ------------------
+deep:
+  # Request timeout in seconds
+  timeout_seconds: 10
+
+  # Number of retries on failure
+  max_retries: 2
+
+  # Maximum concurrent workers for parallel fetching
+  max_workers: 10
+
+  # Cache TTL in minutes (0 to disable caching)
+  cache_ttl_minutes: 60
+
+# Output Settings
+# ---------------
+output:
+  # Language mode for reports
+  # Options: "bilingual" (EN headlines, ZH analysis), "english", "chinese"
+  language_mode: "bilingual"
+
+  # Default output format
+  # Options: "markdown", "json", "slack"
+  default_format: "json"
+
+# Keyword Presets
+# ---------------
+# Use these with: --keyword ai, --keyword crypto, etc.
+keyword_presets:
+  ai:
+    - AI
+    - LLM
+    - GPT
+    - Claude
+    - Gemini
+    - OpenAI
+    - Anthropic
+    - Machine Learning
+    - Neural
+    - Agent
+    - ChatGPT
+    - Copilot
+
+  crypto:
+    - crypto
+    - Bitcoin
+    - Ethereum
+    - blockchain
+    - DeFi
+    - Web3
+    - NFT
+    - Solana
+    - Dogecoin
+
+  apple:
+    - Apple
+    - iPhone
+    - Mac
+    - iOS
+    - macOS
+    - iPad
+    - Vision Pro
+    - Apple Watch
+    - AirPods
+
+  google:
+    - Google
+    - Android
+    - Chrome
+    - Pixel
+    - Gemini
+    - YouTube
+    - Search
+    - Waymo
+
+  microsoft:
+    - Microsoft
+    - Windows
+    - Azure
+    - Copilot
+    - Xbox
+    - LinkedIn
+    - GitHub
+    - Office
+
+  markets:
+    - stock
+    - market
+    - S&P
+    - Dow
+    - NASDAQ
+    - Fed
+    - interest rate
+    - earnings
+    - IPO
+    - merger
+    - acquisition
+
+  startup:
+    - startup
+    - VC
+    - venture
+    - funding
+    - seed
+    - Series A
+    - Series B
+    - YC
+    - accelerator

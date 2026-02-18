@@ -58,29 +58,39 @@ Reply with a number (e.g., "1") or copy the command to execute.
 
 ---
 
+## 🏛️ Politics & Social Media
+
+**12. 🇺🇸 Trump / Truth Social**
+> Use english-news-skill to fetch Trump's latest posts from Truth Social
+
+---
+
 ## 🥊 Combo Scans
 
-**15. ☕ Morning Tech Briefing (All Tech Sources)**
+**13. ☕ Morning Tech Briefing (All Tech Sources)**
 > Use english-news-skill to give me a comprehensive tech morning briefing from all tech sources (HN, GitHub, ProductHunt, Reddit, TechCrunch, Ars, Verge)
 
-**16. 🌅 Global Headlines (All News Sources)**
+**14. 🌅 Global Headlines (All News Sources)**
 > Use english-news-skill to scan all global news sources (BBC, Reuters, AP) for today's top stories
 
-**17. 💰 Market Pulse (All Finance Sources)**
+**15. 💰 Market Pulse (All Finance Sources)**
 > Use english-news-skill to give me a market update from Bloomberg, Yahoo Finance, and CNBC
 
-**18. 🤖 AI & LLM Focus (Keyword Filter)**
+**16. 🤖 AI & LLM Focus (Keyword Filter)**
 > Use english-news-skill to scan all tech sources for AI, LLM, and machine learning news
 
-**19. 🍎 Apple News (Keyword Filter)**
+**17. 🍎 Apple News (Keyword Filter)**
 > Use english-news-skill to find all news about Apple, iPhone, Mac across all sources
+
+**18. 🏛️ All Politics (Geopolitics + Trump)**
+> Use english-news-skill to scan all political sources including think tanks and Trump's Truth Social
 
 ---
 
 ## 🔥 Full Scan
 
-**20. 🌐 Global Scan (All 14 Sources)**
-> Use english-news-skill to do a full scan of all 14 sources and give me a comprehensive news report
+**19. 🌐 Global Scan (All 40+ Sources)**
+> Use english-news-skill to do a full scan of all sources and give me a comprehensive news report
 
 ---
 
